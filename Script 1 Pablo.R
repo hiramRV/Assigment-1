@@ -46,6 +46,8 @@ b_limpia %>%
        subtitle = "Using bins = 30") +
   scale_x_continuous(labels = label_comma())
 
+ggsave("Outputs/price_hist.png", width = 10, height = 10)
+
 b_limpia %>%
   ggplot() +
   geom_boxplot(aes(starting_price), fill = "grey90", color = "#188977") +
@@ -59,6 +61,8 @@ b_limpia %>%
         axis.ticks.x=element_blank()) +
   coord_flip() 
 
+ggsave("Outputs/price_boxplot.png", width = 10, height = 10)
+
 b_limpia %>%
   ggplot() +
   geom_density(aes(starting_price), fill = "grey90", color = "#188977") +
@@ -69,6 +73,8 @@ b_limpia %>%
   ylab("Density") +
   labs(title = "Distribution of the variable Starting Price") +
   scale_x_continuous(labels = label_comma())
+
+ggsave("Outputs/price_dist.png", width = 10, height = 10)
 
 ### Pregunta 2 ----
 b_limpia %>%
@@ -89,6 +95,8 @@ b_limpia %>%
         panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank()) 
 
+ggsave("Outputs/col_type_region_1.png", width = 10, height = 10)
+
 b_limpia %>%
   count(region, type) %>%
   group_by(region) %>%
@@ -107,6 +115,7 @@ b_limpia %>%
         panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank()) 
   
+ggsave("Outputs/col_type_region_2.png", width = 10, height = 10)
 
 b_limpia %>%
   count(type, region) %>%
@@ -126,6 +135,8 @@ b_limpia %>%
         panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank()) 
 
+ggsave("Outputs/col_type_region_3.png", width = 10, height = 10)
+
 b_limpia %>%
   count(region, type) %>%
   group_by(region) %>%
@@ -144,14 +155,7 @@ b_limpia %>%
         panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank()) 
 
-
-
-
-
-
-
-
-
+ggsave("Outputs/col_type_region_4.png", width = 10, height = 10)
 
 ### Pregunta 3 ----
 b_limpia %>%
@@ -164,6 +168,8 @@ b_limpia %>%
   xlab("Area, in square meters") +
   ylab("Region")
 
+ggsave("Outputs/area_density_by_region.png", width = 10, height = 10)
+
 ### Pregunta 4 ----
 b_limpia %>%
   ggplot() +
@@ -175,6 +181,8 @@ b_limpia %>%
   xlab("Area, in square meters") +
   ylab("Price") +
   scale_y_continuous(labels = label_comma())
+
+ggsave("Outputs/simple_point.png", width = 10, height = 10)
 
 b_limpia %>%
   summarise(cor = cor(area, starting_price))
