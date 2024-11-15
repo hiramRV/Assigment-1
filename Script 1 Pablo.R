@@ -61,7 +61,7 @@ b_limpia %>%
         axis.ticks.x=element_blank()) +
   coord_flip() 
 
-ggsave("Outputs/price_boxplot.png", width = 10, height = 10)
+ggsave("Outputs/price_boxplot.png", width = 4, height = 10)
 
 b_limpia %>%
   ggplot() +
