@@ -1,3 +1,7 @@
+##################
+## Asigment 1
+## Code by Steven Rubio
+
 library(openxlsx)
 library(mosaic)
 data <-read.xlsx("dataset01.xlsx")
