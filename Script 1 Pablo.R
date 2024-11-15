@@ -36,7 +36,7 @@ b_limpia %>%
 
 b_limpia %>%
   ggplot() +
-  geom_histogram(aes(starting_price), fill = "#188977") +
+  geom_histogram(aes(starting_price), fill = "#188977", color = "grey10", alpha = .7) +
   geom_vline(aes(xintercept = mean(starting_price)), color = "salmon") +
   annotate("text", x = r_p1$promedio*1.3, y = 120, label = paste0("Mean: ", format(round(r_p1$promedio, digits = 0), big.mark = ",", scientific = FALSE) ,sep = "")) +
   theme_minimal() +
