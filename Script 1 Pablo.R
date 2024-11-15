@@ -196,6 +196,9 @@ b_limpia %>%
   ylab("Price") +
   scale_y_continuous(labels = label_comma())
 
+ggsave("Outputs/simple_reg.png", width = 10, height = 10)
+
+
 ### Pregunta 6 ----
 reg_full <- lm(starting_price ~ area + region + type + balcony + rooms, data = b_limpia)
 
