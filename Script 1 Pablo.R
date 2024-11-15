@@ -14,7 +14,7 @@ porc <- function(abs, pob) {
 }
 
 ### Importar datos ----
-b_raw <- read_excel("Assignment 1/Datos/dataset01.xlsx")
+b_raw <- read_excel("dataset01.xlsx")
 
 b_limpia <- b_raw %>%
   clean_names()
@@ -196,11 +196,10 @@ b_limpia %>%
   ylab("Price") +
   scale_y_continuous(labels = label_comma())
 
+### Pregunta 6 ----
+reg_full <- lm(starting_price ~ area + region + type + balcony + rooms, data = b_limpia)
 
-
-
-
-
+summary(reg_full)
 
 
 
