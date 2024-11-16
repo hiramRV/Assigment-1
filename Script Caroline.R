@@ -71,11 +71,36 @@ abline(lm_model, col = "red", lwd = 2)
 
 # Q6 - Fit a linear regression explaining STARTING_PRICE by REGION, TYPE, BALCONY, ROOMS, AREA.
 
+round(cor(data[, c("ROOMS", "AREA", "STARTING_PRICE")]), 3)
+plot(AREA ~ ROOMS, data = data, xlab = "Rooms", ylab = "Area", col = "turquoise", pch = 20, cex = 1)
+abline(lm(AREA ~ ROOMS, data = data), col = "red", lwd = 2)
+
 mr_model <- lm(STARTING_PRICE ~ REGION + TYPE + BALCONY + ROOMS + AREA, data = data)
 summary(mr_model)
 
-#  (Tips: i.Make use of appropriate numerical and graphical tools;ii.Make sure that you report the estimated regression in equation form;iii.Make sure toindicate how good are the independent variables at explaining the price;iv.Make sureyou interpret the coefficients of the regression.)7.  The  datasettest.xlsxthat  can  be  found  in  Athena  (Resources/Part  1/Assignment)contains information on the region, the type of housing unit, the presence of a balcony,the number of rooms and the area of ten housing units.  Use your regression model fromexercise 6 to predict the starting price of these housing units.
+# Improved MRM (remove rooms then balcony because insignificant)
+mr_model2 <- lm(STARTING_PRICE ~ REGION + TYPE + AREA, data = data)
+summary(mr_model2)
 
+par(mfrow = c(2, 3))
+
+colours <- c("yellow2", "pink3", "turquoise")
+for (i in levels(data$REGION)) {
+    region <- data[data$REGION == i, ]
+    
+    plot(region$AREA, region$STARTING_PRICE,
+         main = paste("Starting price vs area in", i),
+         xlab = "Area", ylab = "Starting Price in millions SEK",
+         pch = 19, col = colours[region$TYPE], cex = 1.5)
+    
+    legend("topleft", legend = c("Apartment", "Terrace", "Villa"), fill = colours, title = "Type", cex = 0.8)
+}
+
+# Q7 - Predict starting prices for dataset test
+
+test_pred <- predict(mr_model, newdata = test)
+test$STARTING_PRICE <- test_pred
+head(test)
 
 
 
