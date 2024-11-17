@@ -41,13 +41,34 @@ boxplot(AREA ~ REGION, data = data)
 
 
 ### Question 4: Analyze STARTING_PRICE and AREA ----
+#We see that they are positively related
+#cor(data$AREA, data$STARTING_PRICE)
+
+print(paste0("Corelation between Starting price and Area: ",cor(data$AREA, data$STARTING_PRICE)))
 plot(data$AREA,data$STARTING_PRICE,xlab="Area",
      ylab="Starting Price", main="Grafte",pch=4)
+
+#What if we do it per Region:
+for (i in levels(data$REGION)) {
+  data_region <- data[data$REGION == i, ]
+  print(paste0("Region: ",i,". Cor Value: ",cor(data_region$AREA, data_region$STARTING_PRICE))) 
+  
+}
+#What if we do it per TYPE:
+for (i in levels(data$TYPE)) {
+  data_type <- data[data$TYPE == i, ]
+  print(paste0("TYPE: ",i,". Cor Value: ",cor(data_type$AREA, data_type$STARTING_PRICE))) 
+  
+}
 
 ### Question 5:Fit linear regression between STARTING_PRICE and AREA ----
 simple_reg = lm(STARTING_PRICE~AREA, data=data)
 summary(simple_reg)
 abline(simple_reg, col = "#FF1F06")
+
+
+#It seems like we get better results if we analyze the data based on  REGION
+
 
 ### Question 6:  ----
 # Fit linear regression between STARTING_PRICE and REGION,TYPE,BALCONY,ROOMS and AREA
@@ -57,6 +78,7 @@ plot(data_num)
 multiple_reg = lm(STARTING_PRICE~REGION+TYPE+ROOMS+AREA+BALCONY, data=data)
 summary(multiple_reg)
 abline(multiple_reg, col = "#488606")
+
 
 ### Question 7: Predict housing starting price ----
 test <-read.xlsx("test.xlsx")
@@ -70,4 +92,7 @@ predict(multiple_reg,test)   #Predict using our model
 # Our Original data
 data[data$ID %in% c(629,718,1534,1695,1864,2138),]
 
+#Test Area
+test_area <- select(test,AREA)
+predict(simple_reg,test)   #Predict using the simpe model from Q4
 
