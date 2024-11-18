@@ -51,8 +51,10 @@ plot(data$AREA,data$STARTING_PRICE,xlab="Area",
 #What if we do it per Region:
 for (i in levels(data$REGION)) {
   data_region <- data[data$REGION == i, ]
-  print(paste0("Region: ",i,". Cor Value: ",cor(data_region$AREA, data_region$STARTING_PRICE))) 
-  
+  print(paste0("Region: ",i,". Cor Value: ",round(cor(data_region$AREA, data_region$STARTING_PRICE),digits=4) )) 
+  group_reg = lm(STARTING_PRICE~AREA, data=data_region)
+  print(paste0("Coefficients ",round(group_reg$coefficients[1],2)," ,",round(group_reg$coefficients[2],2)))
+  print("")
 }
 #What if we do it per TYPE:
 for (i in levels(data$TYPE)) {
@@ -65,7 +67,6 @@ for (i in levels(data$TYPE)) {
 simple_reg = lm(STARTING_PRICE~AREA, data=data)
 summary(simple_reg)
 abline(simple_reg, col = "#FF1F06")
-
 
 #It seems like we get better results if we analyze the data based on  REGION
 
