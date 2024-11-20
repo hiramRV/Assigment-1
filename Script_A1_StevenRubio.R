@@ -7,6 +7,7 @@ library(mosaic)
 library(RColorBrewer)
 library(DescTools)
 library(e1071)
+library(scales)
 
 data <-read.xlsx("dataset01.xlsx")
 
@@ -100,6 +101,9 @@ multiple_reg6 = lm(STARTING_PRICE~REGION+TYPE+AREA+REGION*AREA+TYPE*AREA, data=d
 summary(multiple_reg6)
 round(multiple_reg6$coefficients, 3)
 
+multiple_reg7 = lm(STARTING_PRICE~REGION+AREA+log(AREA)+REGION*AREA, data=data)
+summary(multiple_reg7)
+
 ### Question 7: Predict housing starting price ----
 test <-read.xlsx("test.xlsx")
 str(test)
@@ -108,10 +112,7 @@ test$TYPE<-factor(test$TYPE)
 test$BALCONY<-factor(test$BALCONY)
 View(data)
 
-predict(multiple_reg6,test)   #Predict using our model
-# Our Original data
-data[data$ID %in% c(629,718,1534,1695,1864,2138),]
+p1<-1000000*predict(multiple_reg,test)   #Predict using first model
+p2<-1000000*predict(multiple_reg6,test)   #Predict using last model model
 
-#Test Area
-test_area <- select(test,AREA)
-predict(simple_reg,test)   #Predict using the simple model from Q4
+percent((p1 - p2) / p1)
