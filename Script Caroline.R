@@ -7,6 +7,7 @@
 library(readxl)
 test <- read_excel("test.xlsx")
 data <- read_excel("dataset01.xlsx")
+par(mfrow = c(1,1))
 
 # Data transformation
 
@@ -40,7 +41,7 @@ for (i in levels(data$TYPE)) {
   type_data <- data[data$TYPE == i, ]
   prop_table <- prop.table(table(type_data$REGION))
   barplot(prop_table, main = paste(i), xlab = "Region", ylab = "Proportion", names.arg = names(prop_table),
-          col = c("yellow2", "pink3", "seagreen2", "lightsalmon2","turquoise"),
+          col = c("#DEEDCF", "#99D492", "#1D9A6C", "#188977", "#0A2F51"),
           ylim = c(0, 0.7))
 }
 
@@ -54,7 +55,7 @@ for (i in levels(data$REGION)) {
 }
 
 par(mfrow = c(1,1))
-boxplot(data$AREA ~ data$REGION, col = c("yellow2", "pink3", "seagreen2", "lightsalmon2","turquoise"), ylab = "Area", xlab = "Regions")
+boxplot(data$AREA ~ data$REGION, col = c("#DEEDCF", "#99D492", "#1D9A6C", "#188977", "#0A2F51"), ylab = "Area", xlab = "Regions", main = "Boxplot of Area by Region")
 
 # Q4 - Analyze relationship between the variables STARTING_PRICE and AREA. 
 
@@ -65,6 +66,7 @@ plot(STARTING_PRICE ~ AREA, data = data, xlab = "Area", ylab = "Starting price i
 # Q5 - Fit a linear regression explaining STARTING_PRICE by AREA.
 
 lm_model <- lm(STARTING_PRICE ~ AREA, data = data)
+?lm
 summary(lm_model)
 plot(STARTING_PRICE ~ AREA, data = data, xlab = "Area", ylab = "Starting price in millions SEK", col = "turquoise", pch = 20, cex = 1)
 abline(lm_model, col = "red", lwd = 2)
@@ -79,12 +81,12 @@ mr_model <- lm(STARTING_PRICE ~ REGION + TYPE + BALCONY + ROOMS + AREA, data = d
 summary(mr_model)
 
 # Improved MRM (remove rooms then balcony because insignificant)
-mr_model2 <- lm(STARTING_PRICE ~ REGION + TYPE + AREA, data = data)
+mr_model2 <- lm(STARTING_PRICE ~ REGION + TYPE + AREA + REGION*AREA + TYPE*AREA, data = data)
 summary(mr_model2)
 
 par(mfrow = c(2, 3))
 
-colours <- c("yellow2", "pink3", "turquoise")
+colours <- c("#99D492", "#188977", "#0A2F51")
 for (i in levels(data$REGION)) {
     region <- data[data$REGION == i, ]
     
@@ -96,12 +98,12 @@ for (i in levels(data$REGION)) {
     legend("topleft", legend = c("Apartment", "Terrace", "Villa"), fill = colours, title = "Type", cex = 0.8)
 }
 
+
 # Q7 - Predict starting prices for dataset test
 
 test_pred <- predict(mr_model, newdata = test)
 test$STARTING_PRICE <- test_pred
 head(test)
-
 
 
 
