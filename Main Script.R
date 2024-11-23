@@ -9,13 +9,8 @@
 ###################
 
 #Librarys
-library(openxlsx)
-library(mosaic)
-library(RColorBrewer)
-library(DescTools)
-library(e1071)
-library(scales)
 library(pacman)
+p_load(openxlsx, mosaic, RColorBrewer, DescTools, e1071, readxl, tidyverse, ggplot2, scales, ggridges, janitor)
 
 ### Data Pre-processing ----
 data <-read.xlsx("dataset01.xlsx")
@@ -43,8 +38,6 @@ hist(data$STARTING_PRICE, breaks = 35, col = "turquoise", xlab = "Starting Price
 
 ### Question 2: ----
 #Bar plots percentange
-p_load(readxl, tidyverse, ggplot2, janitor, e1071, scales, ggridges)
-
 b_limpia <- data %>%
   clean_names()
 
