@@ -1,7 +1,5 @@
 # This is Caroline's code
 
-# Hola Patito Pablo and Big boss Steven and Fantastic Faezeh
-# Also sorry 
 
 
 library(readxl)

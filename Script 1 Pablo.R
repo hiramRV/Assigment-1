@@ -1,6 +1,6 @@
 ### Assignment 1  
 ###
-### Código elaborado por Pablo Paras Ochoa que es la mejor
+### Código elaborado por Pablo Paras Ochoa
 
 ### Paquetes & Setup ----
 library(pacman)
