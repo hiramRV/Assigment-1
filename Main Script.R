@@ -47,8 +47,12 @@ b_limpia %>%
   mutate(tot = sum(n),
          por = n/tot*100) %>%
   ungroup() %>%
-  ggplot() +
-  geom_col(aes(type, por, fill = region), position = "stack", color = "grey10") +
+  mutate(lab = paste0(round(por, digits = 1), "%"),
+         col_por = ifelse(region == "West" | region == "Stockholm", "white", "black")) %>%
+  ggplot(aes(type, por, fill = region)) +
+  geom_bar(stat = "identity", color = "grey10") +
+  geom_text(aes(type, label = lab, fontface = "bold", color = col_por), position = position_stack(vjust = 0.5), size = 4, show.legend = F) +
+  scale_colour_manual(values=c("black", "white")) +
   theme_minimal() +
   xlab("Housing type") +
   ylab("Percentage of housing type by region") +
@@ -67,8 +71,12 @@ b_limpia %>%
   mutate(tot = sum(n),
          por = n/tot*100) %>%
   ungroup() %>%
-  ggplot() +
-  geom_col(aes(region, por, fill = type), position = "stack", color = "grey10") +
+  mutate(lab = paste0(round(por, digits = 1), "%"),
+         col_por = ifelse(type == "Villa", "white", "black")) %>%
+  ggplot(aes(region, por, fill = type)) +
+  geom_bar(stat = "identity", color = "grey10") +
+  geom_text(aes(region, label = lab, fontface = "bold", color = col_por), position = position_stack(vjust = 0.5), size = 4, show.legend = F) +
+  scale_colour_manual(values=c("black", "white")) +
   theme_minimal() +
   xlab("Region") +
   ylab("Percentage of housing by type") +
