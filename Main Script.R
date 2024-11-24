@@ -10,6 +10,7 @@
 
 #Librarys
 library(pacman)
+library(openxlsx)
 p_load(openxlsx, mosaic, RColorBrewer, DescTools, e1071, readxl, tidyverse, ggplot2, scales, ggridges, janitor)
 
 ### Data Pre-processing ----
@@ -37,7 +38,7 @@ boxplot(data$STARTING_PRICE, col = "turquoise", horizontal = T, xlab = "Starting
 hist(data$STARTING_PRICE, breaks = 35, col = "turquoise", xlab = "Starting Price in millions SEK", main = "Histogram of Starting price")
 
 ### Question 2: ----
-#Bar plots percentange
+#Bar plots percentage
 b_limpia <- data %>%
   clean_names()
 
@@ -153,7 +154,6 @@ for (i in levels(data$REGION)) {
 for (i in levels(data$TYPE)) {
   data_type <- data[data$TYPE == i, ]
   print(paste0("TYPE: ",i,". Cor Value: ",cor(data_type$AREA, data_type$STARTING_PRICE))) 
-  
 }
 
 ### Question 5: ----
@@ -198,7 +198,6 @@ multiple_reg7 = lm(STARTING_PRICE~REGION+AREA+log(AREA)+REGION*AREA, data=data)
 summary(multiple_reg7)
 
 #Plot
-
 par(mfrow = c(2, 3))
 
 colours <- c("#99D492", "#188977", "#0A2F51")
